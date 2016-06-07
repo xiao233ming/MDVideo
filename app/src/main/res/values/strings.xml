@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!--导航菜单-->
+    <string name="menu_share">分享给好友</string>
+    <string name="menu_send">意见与反馈</string>
+    <string name="menu_communicate">联系</string>
+
+
 </resources>
