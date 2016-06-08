@@ -2,6 +2,7 @@ package com.artharyoung.mdvideo;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,8 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.artharyoung.mdvideo.ApiConstant.Api;
-import com.pili.pldroid.player.widget.PLVideoTextureView;
+import com.artharyoung.mdvideo.Fragment.VideoListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,18 +33,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        init();
-    }
 
-    private void init(){
-        PLVideoTextureView mVideoView = (PLVideoTextureView) findViewById(R.id.PLVideoTextureView);
-        mVideoView.setVideoPath(Api.VIDEO_STREAM[14][1]);
-        mVideoView.start();
-//        for (String[] url:Api.VIDEO_STREAM) {
-//
-//            Log.d(TAG, "========onCreate: " + url[0]);
-//            Log.d(TAG, "========onCreate: " + url[1]);
-//        }
+        if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.content_main, VideoListFragment.newInstance(""), TAG);
+            ft.commit();
+        }
     }
 
     @Override
