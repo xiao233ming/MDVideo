@@ -7,4 +7,6 @@
     <color name="colorIcon">#2196F3</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="colorTransparent">#5F3F51B5</color>
 </resources>

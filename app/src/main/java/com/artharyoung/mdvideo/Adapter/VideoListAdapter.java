@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artharyoung.mdvideo.ApiConstant.Api;
-import com.artharyoung.mdvideo.PlayerModule.PlayerActivity;
+import com.artharyoung.mdvideo.PlayerModule.PlayerTextureActivity;
 import com.artharyoung.mdvideo.R;
 import com.artharyoung.mdvideo.Util.ImageLoader;
 
@@ -66,7 +66,7 @@ public class VideoListAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(mContext, PlayerActivity.class);
+                    Intent intent = new Intent(mContext, PlayerTextureActivity.class);
                     intent.putExtra(POSITION,getAdapterPosition());
                     mContext.startActivity(intent);
                 }
