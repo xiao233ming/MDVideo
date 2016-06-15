@@ -130,6 +130,7 @@ public class MediaController extends FrameLayout implements IMediaController {
     protected View makeControllerView() {
         return ((LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(MEDIA_CONTROLLER_ID, this);
+
     }
 
     private void initControllerView(View v) {
@@ -291,11 +292,9 @@ public class MediaController extends FrameLayout implements IMediaController {
         int hours = totalSeconds / 3600;
 
         if (hours > 0) {
-            return String.format(Locale.US, "%02d:%02d:%02d", hours, minutes,
-                    seconds).toString();
+            return String.format(Locale.US, "%02d:%02d:%02d", hours, minutes, seconds).toString();
         } else {
-            return String.format(Locale.US, "%02d:%02d", minutes, seconds)
-                    .toString();
+            return String.format(Locale.US, "%02d:%02d", minutes, seconds).toString();
         }
     }
 

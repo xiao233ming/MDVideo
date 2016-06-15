@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.artharyoung.mdvideo.ApiConstant.Api;
@@ -25,7 +26,6 @@ public class PlayerTextureActivity extends AppCompatActivity {
     private MediaController mMediaController;
     private String mVideoPath;
     private int mRotation = 0;
-    private int mDisplayAspectRatio = PLVideoTextureView.ASPECT_RATIO_FIT_PARENT; //default
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +58,8 @@ public class PlayerTextureActivity extends AppCompatActivity {
             options.setInteger(AVOptions.KEY_LIVE_STREAMING, 1);
         }
 
-        // 1 -> hw codec enable, 0 -> disable [recommended]
-        int codec = getIntent().getIntExtra("mediaCodec", 0);
-        options.setInteger(AVOptions.KEY_MEDIACODEC, codec);
+        // 1 -> 硬件解码, 0 -> 软件解码
+        options.setInteger(AVOptions.KEY_MEDIACODEC, 1);
 
         // whether start play automatically after prepared, default value is 1
         options.setInteger(AVOptions.KEY_START_ON_PREPARED, 0);
@@ -78,6 +77,7 @@ public class PlayerTextureActivity extends AppCompatActivity {
         mVideoView.setOnErrorListener(mOnErrorListener);
 
         mVideoView.setVideoPath(mVideoPath);
+        mVideoView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_16_9);
         mVideoView.start();
     }
 
@@ -97,35 +97,6 @@ public class PlayerTextureActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mVideoView.stopPlayback();
-    }
-
-    public void onClickRotate(View v) {
-        mRotation = (mRotation + 90) % 360;
-        mVideoView.setDisplayOrientation(mRotation);
-    }
-
-    public void onClickSwitchScreen(View v) {
-        mDisplayAspectRatio = (mDisplayAspectRatio + 1) % 5;
-        mVideoView.setDisplayAspectRatio(mDisplayAspectRatio);
-        switch (mVideoView.getDisplayAspectRatio()) {
-            case PLVideoTextureView.ASPECT_RATIO_ORIGIN:
-                showToastTips("Origin mode");
-                break;
-            case PLVideoTextureView.ASPECT_RATIO_FIT_PARENT:
-                showToastTips("Fit parent !");
-                break;
-            case PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT:
-                showToastTips("Paved parent !");
-                break;
-            case PLVideoTextureView.ASPECT_RATIO_16_9:
-                showToastTips("16 : 9 !");
-                break;
-            case PLVideoTextureView.ASPECT_RATIO_4_3:
-                showToastTips("4 : 3 !");
-                break;
-            default:
-                break;
-        }
     }
 
     private PLMediaPlayer.OnErrorListener mOnErrorListener = new PLMediaPlayer.OnErrorListener() {
@@ -185,4 +156,40 @@ public class PlayerTextureActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.player_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.player_scale_4_3:
+                mVideoView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_4_3);
+                break;
+            case R.id.player_scale_16_9:
+                mVideoView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_16_9);
+                break;
+            case R.id.player_scale_default:
+                mVideoView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
+                break;
+
+            case R.id.player_Rotation:
+                mRotation = (mRotation + 90) % 360;
+                mVideoView.setDisplayOrientation(mRotation);
+                break;
+
+            default:
+                mVideoView.setDisplayAspectRatio(PLVideoTextureView.ASPECT_RATIO_PAVED_PARENT);
+                break;
+        }
+
+        //必须super,否则manifest中设置的actionBar返回无效
+        return super.onOptionsItemSelected(item);
+    }
+
 }

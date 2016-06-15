@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/background_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlayerModule.PlayerTextureActivity">
@@ -12,7 +13,7 @@
         android:id="@+id/PLVideoTextureView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:layout_centerInParent="true"/>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:fitsSystemWindows="true"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/MyPlayer.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 </RelativeLayout>
