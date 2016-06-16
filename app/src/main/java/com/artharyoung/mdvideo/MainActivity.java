@@ -1,5 +1,6 @@
 package com.artharyoung.mdvideo;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.artharyoung.mdvideo.Fragment.VideoListFragment;
 
@@ -21,6 +23,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initStatusBar();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -38,6 +43,12 @@ public class MainActivity extends AppCompatActivity
             final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.content_main, VideoListFragment.newInstance(""), TAG);
             ft.commit();
+        }
+    }
+
+    private void initStatusBar() {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 

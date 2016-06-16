@@ -12,3 +12,4 @@
 
 2016.6.16
 - 删除播放页面toolbar colorPrimary Alpha值得设定，API 21以后A TaskDescription's primary color should be opaque解决6.0机器上的崩溃问题（arthar）
+- 修改沉浸式状态栏的适配。
