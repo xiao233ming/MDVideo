@@ -9,3 +9,6 @@
 2016.6.15
 - 修改播放页面的menu菜单，增加比例调节选项
 - 阅读PLDroidPlayer文档，熟悉相关定制接口，下一步准备定制MediaController
+
+2016.6.16
+- 删除播放页面toolbar colorPrimary Alpha值得设定，API 21以后A TaskDescription's primary color should be opaque解决6.0机器上的崩溃问题（arthar）

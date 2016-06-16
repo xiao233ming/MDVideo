@@ -26,7 +26,6 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorTransparent</item>
         <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
     </style>
 
@@ -36,8 +35,8 @@
     </style>
 
     <!--定义播放器toolBar样式-->
-    <style name="MyPlayer.PopupOverlay" parent="ThemeOverlay.AppCompat">
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+    <style name="MyPlayer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
         <item name="android:itemBackground">@color/colorTransparent</item>
     </style>
 </resources>
