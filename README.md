@@ -17,7 +17,7 @@ MDVideo是在Google Study Jams 2016活动第二阶段发起的一个团队协作
 - 熟悉APP的整体开发流程，以及性能调试与测试。
 - 培养良好的代码风格
 
-[**开发文档**]()
+[**开发文档**](https://github.com/AndroidTips/MDVideo/tree/master/docs)
 ## Features
 
 - 支持Android 4.4及以上
