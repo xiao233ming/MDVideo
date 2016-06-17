@@ -1,7 +1,7 @@
 # 开发文档
 
-- [待办事项]()
-- [开发日记]()
+- [待办事项](https://github.com/AndroidTips/MDVideo/blob/master/docs/todo_list.md)
+- [开发日记](https://github.com/AndroidTips/MDVideo/blob/master/docs/lod_dev.md)
 
 ## 规范
 - [Google Java代码风格](https://github.com/codeset/google-java-styleguide)
