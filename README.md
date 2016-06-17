@@ -17,6 +17,7 @@ MDVideo是在Google Study Jams 2016活动第二阶段发起的一个团队协作
 - 熟悉APP的整体开发流程，以及性能调试与测试。
 - 培养良好的代码风格
 
+[**开发文档**]()
 ## Features
 
 - 支持Android 4.4及以上
@@ -40,11 +41,6 @@ Email: artharyoungcn@gmail.com
 - [PLDroidPlayer](https://github.com/pili-engineering/PLDroidPlayer)
 - [Icon](http://iconmonstr.com/video-14/?png)
 - [Adapter](https://github.com/hongyangAndroid/baseAdapter)
-
-## About
-
-- [项目 git及GitHub简单应用](http://www.jianshu.com/p/3113cf8d794e)
-- [APP Bar 的使用](http://artharyoung.github.io/2016/06/16/2016-6-16/)
 
 ## License
 MDVideo is licensed under the terms of the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
