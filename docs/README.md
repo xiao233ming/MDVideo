@@ -20,6 +20,9 @@ git push 仓库地址
 
 ## 成员列表（按统计时间排序）
 [CrazyPudding](https://github.com/crazypudding)
+[xiao233ming](https://github.com/xiao233ming)
+[ansonqian](https://github.com/ansonqian)
+[SnailRwk](https://github.com/SnailRwk)
 
 ## 问题解决与分享
 - [项目 git及GitHub简单应用](http://www.jianshu.com/p/3113cf8d794e)
