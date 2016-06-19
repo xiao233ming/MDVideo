@@ -26,6 +26,7 @@ git push 仓库地址
 - [nthreex](https://github.com/nthreex)
 - [Breadykid](https://github.com/BreadKid)
 - [artharyoung](https://github.com/artharyoung)
+- [huangkunkun](https://github.com/huangkunkun)
 
 ## 问题解决与分享
 - [项目 git及GitHub简单应用](http://www.jianshu.com/p/3113cf8d794e)
