@@ -20,3 +20,4 @@
 2016.6.20
 - 更改包名为com.studyjams.mdvideo
 - 删除原有PLDroidPlayer的jar、so包，播放器改用Google ExoPlayer.
+
