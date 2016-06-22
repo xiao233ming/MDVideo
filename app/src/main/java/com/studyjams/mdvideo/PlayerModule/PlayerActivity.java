@@ -216,11 +216,21 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
     private void onShown() {
         Intent intent = getIntent();
-        contentUri = intent.getData();
-        contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA,
-                inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
-        contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
-        provider = intent.getStringExtra(PROVIDER_EXTRA);
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type.equals("video/*")) {
+            contentUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            contentType = Util.TYPE_SS;
+            contentId = "";
+            provider = "";
+        } else{
+            contentUri = intent.getData();
+            contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA, inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
+            contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
+            provider = intent.getStringExtra(PROVIDER_EXTRA);
+        }
+
         configureSubtitleView();
         if (player == null) {
             if (!maybeRequestPermission()) {
@@ -458,8 +468,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
     public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees,
                                    float pixelWidthAspectRatio) {
         shutterView.setVisibility(View.GONE);
-        videoFrame.setAspectRatio(
-                height == 0 ? 1 : (width * pixelWidthAspectRatio) / height);
+        videoFrame.setAspectRatio(height == 0 ? 1 : (width * pixelWidthAspectRatio) / height);
     }
 
     // User controls
@@ -481,6 +490,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         popup.show();
     }
 
+    //add by arthar
     public void exitPlayer(View v){
         finish();
     }

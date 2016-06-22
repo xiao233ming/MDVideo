@@ -48,6 +48,10 @@ public class Samples {
 
     }
 
+    public static final Sample[] CNTV_DASH = new Sample[]{
+            new Sample("CCTV-1HD", "http://vod.cdn4.cmvideo.cn/envivo_v/HD/cctv1/450/01.m3u8", Util.TYPE_HLS),
+    };
+
     /**测试用数据流**/
     public static final Sample[] LIVE_DASH = new Sample[]{
             new Sample("CCTV-1", "http://106.36.45.36/live.aishang.ctlcdn.com/00000110240001_1/encoder/1/playlist.m3u8", Util.TYPE_HLS),

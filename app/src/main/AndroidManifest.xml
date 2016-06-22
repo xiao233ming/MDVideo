@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 屏幕锁定 -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!--读写SD卡的权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".MDVideoApplication"
@@ -27,15 +29,19 @@
             </intent-filter>
         </activity>
 
+        <!--   android:screenOrientation="landscape"-->
         <activity
             android:name=".PlayerModule.PlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTop"
             android:parentActivityName="com.studyjams.mdvideo.MainActivity"
-            android:screenOrientation="landscape"
             android:theme="@style/MyTheme.FullScreen">
             <intent-filter>
-                <action android:name="com.google.android.exoplayer.demo.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
 
                 <data android:scheme="http"/>
                 <data android:scheme="https"/>
@@ -43,7 +49,12 @@
                 <data android:scheme="asset"/>
                 <data android:scheme="file"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
 
+                <data android:mimeType="video/*" />
+            </intent-filter>
         </activity>
     </application>
 

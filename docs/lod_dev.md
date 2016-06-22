@@ -21,3 +21,6 @@
 - 更改包名为com.studyjams.mdvideo
 - 删除原有PLDroidPlayer的jar、so包，播放器改用Google ExoPlayer.
 
+2016.6.22
+- 匹配播放页面的filter，支持点击SD卡中的视频拉起播放器。
+
