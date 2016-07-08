@@ -5,7 +5,6 @@
         android:id="@+id/menu_video_display"
         android:icon="@drawable/ic_menu_slideshow"
         android:title="@string/menu_video_display"/>
-
     <item
         android:id="@+id/menu_video_share"
         android:icon="@drawable/ic_menu_share"

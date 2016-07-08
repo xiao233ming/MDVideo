@@ -8,6 +8,7 @@
     <string name="action_settings">设置</string>
 
     <!--导航菜单-->
+
     <string name="menu_video_local">本地视频</string>
     <string name="menu_video_history">播放历史</string>
     <string name="menu_video_display">显示样式</string>
