@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initData();
         initView();
     }
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         mData = new ArrayList<>();
         mData.add(getResources().getString(R.string.menu_video_local));
         mData.add(getResources().getString(R.string.menu_video_history));
-        mData.add(getResources().getString(R.string.menu_video_setting));
+        mData.add(getResources().getString(R.string.menu_video_info));
     }
 
     private void initView(){

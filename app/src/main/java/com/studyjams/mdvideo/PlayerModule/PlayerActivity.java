@@ -492,7 +492,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
     //add by arthar
     public void exitPlayer(View v){
-        finish();
+        toggleControlsVisibility();
+        super.onBackPressed();
     }
 
     public void showAudioPopup(View v) {
