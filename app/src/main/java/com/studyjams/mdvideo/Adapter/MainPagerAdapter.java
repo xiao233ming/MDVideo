@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.studyjams.mdvideo.Fragment.HistoryFragment;
+import com.studyjams.mdvideo.Fragment.LocalVideoListFragment;
 import com.studyjams.mdvideo.Fragment.VideoListFragment;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 return VideoListFragment.newInstance(mData.get(position));
+            case 2:
+                return LocalVideoListFragment.newInstance(mData.get(position));
             default:
                 return HistoryFragment.newInstance(mData.get(position));
         }
