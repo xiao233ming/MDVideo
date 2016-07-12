@@ -25,9 +25,9 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position){
-            case 0:
-                return VideoListFragment.newInstance(mData.get(position));
             case 2:
+                return VideoListFragment.newInstance(mData.get(position));
+            case 0:
                 return LocalVideoListFragment.newInstance(mData.get(position));
             default:
                 return HistoryFragment.newInstance(mData.get(position));

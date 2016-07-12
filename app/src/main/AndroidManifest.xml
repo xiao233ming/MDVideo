@@ -33,6 +33,7 @@
         <activity
             android:name=".PlayerModule.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="landscape"
             android:launchMode="singleTop"
             android:parentActivityName="com.studyjams.mdvideo.MainActivity"
             android:theme="@style/MyTheme.FullScreen">

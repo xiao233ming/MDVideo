@@ -5,11 +5,11 @@
 
 ## 规范
 - [Google Java代码风格](https://github.com/codeset/google-java-styleguide)
-- [Material Design](https://material.google.com/#)|[中文版](http://adchs.github.io/)
+- [Material Design](https://material.google.com/#)
 
 ## 代码提交Git指令
 ```java
-git rm -r --cache .
+git rm -r --cached .
 git add .
 git commit -m "msg"
 

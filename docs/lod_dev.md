@@ -33,3 +33,10 @@
 - API 兼容至19 (-_-メ)
 - 添加一张图片
 
+2016.7.12
+- 合并[nthreex](https://github.com/nthreex)提交的本地视频列表部分代码
+- 修改本地列表使用LoaderManager来加载媒体库数据
+- 参考[RecyclerViewCursorAdapter](https://github.com/androidessence/RecyclerViewCursorAdapter)扩展RecyclerView的Adapter
+- 参考[MaterialDesignExample](https://github.com/chenyangcun/MaterialDesignExample)为本地视频单个item添加onClick监听
+- toolbar上增加一个搜索按钮（功能待完善）
+

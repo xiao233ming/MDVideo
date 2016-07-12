@@ -41,6 +41,8 @@ Email: artharyoungcn@gmail.com
 - [Google ExoPlayer](https://github.com/google/ExoPlayer)
 - [Icon](http://iconmonstr.com/video-14/?png)
 - [Adapter](https://github.com/hongyangAndroid/baseAdapter)
+- [RecyclerViewCursorAdapter](https://github.com/androidessence/RecyclerViewCursorAdapter)
+- [MaterialDesignExample](https://github.com/chenyangcun/MaterialDesignExample)
 
 ## License
 MDVideo is licensed under the terms of the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)

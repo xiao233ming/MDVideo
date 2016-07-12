@@ -198,6 +198,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         setIntent(intent);
     }
 
+    //为什么大于23的版本在onStart中onShown();
     @Override
     public void onStart() {
         super.onStart();

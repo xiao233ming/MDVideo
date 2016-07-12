@@ -1,4 +1,4 @@
-package com.studyjams.mdvideo.Util;
+package com.studyjams.mdvideo.Bean;
 
 /**
  * Created by zwx on 2016/6/22.
