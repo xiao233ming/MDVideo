@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,8 +15,10 @@ import com.studyjams.mdvideo.ProRecyclerView.RecyclerViewCursorViewHolder;
 import com.studyjams.mdvideo.R;
 import com.studyjams.mdvideo.Util.ImageLoader;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by syamiadmin on 2016/7/12.
@@ -113,7 +114,8 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
             mVideoData.add(getAdapterPosition(),video);
 
             mTitle.setText(title);
-            mInfo.setText(DateFormat.getTimeFormat(mContext).format(duration));
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+            mInfo.setText(formatter.format(duration));
             ImageLoader.LoadNormalImage(mContext,path,mThumbnail);
         }
     }

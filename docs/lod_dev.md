@@ -40,3 +40,6 @@
 - 参考[MaterialDesignExample](https://github.com/chenyangcun/MaterialDesignExample)为本地视频单个item添加onClick监听
 - toolbar上增加一个搜索按钮（功能待完善）
 
+2016.7.13
+- 更改LoadManager的初始化，Fragment应该在onActivityCreated回调中初始化(-_-メ)
+

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -75,20 +76,21 @@ public class LocalVideoListFragment extends Fragment implements LoaderManager.Lo
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Initialize Video Loader
+        getActivity().getSupportLoaderManager().initLoader(LOCAL_VIDEO_LOADER, null, this);
+    }
+
+    @Override
     public void onItemClick(View view, int position) {
 
             Intent intent = new Intent(getActivity(), PlayerActivity.class)
                     .setData(Uri.parse(mLocalVideoCursorAdapter.getItemData(position).getPath()))
-                    .putExtra(PlayerActivity.CONTENT_ID_EXTRA, mLocalVideoCursorAdapter.getItemData(position).getId())
+                    .putExtra(PlayerActivity.CONTENT_ID_EXTRA, String.valueOf(mLocalVideoCursorAdapter.getItemData(position).getId()))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, mLocalVideoCursorAdapter.getItemData(position).getMimeType());
             getActivity().startActivity(intent);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Initialize Video Loader
-        getActivity().getSupportLoaderManager().initLoader(LOCAL_VIDEO_LOADER, null, this);
     }
 
     @Override
