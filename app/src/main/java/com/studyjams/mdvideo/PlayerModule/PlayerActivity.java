@@ -498,6 +498,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         super.onBackPressed();
     }
 
+    //弹出声道选择的菜单
     public void showAudioPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         Menu menu = popup.getMenu();
@@ -525,6 +526,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         popup.show();
     }
 
+    //弹出Log打印方式的选项
     public void showVerboseLogPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         Menu menu = popup.getMenu();
