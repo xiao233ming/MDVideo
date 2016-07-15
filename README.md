@@ -21,12 +21,8 @@ MDVideo是在Google Study Jams 2016活动第二阶段发起的一个团队协作
 ## Features
 
 - 支持Android 4.4及以上
-
-
-## TODO
 - 本地视频播放支持
-- RMVB、MKV格式支持
-- 免费、无版权在线视频流接入
+- 支持mp4、mp3、Webm、aac、mkv格式
 
 ## Download
 

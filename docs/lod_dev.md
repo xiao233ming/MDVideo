@@ -43,3 +43,7 @@
 2016.7.13
 - 更改LoadManager的初始化，Fragment应该在onActivityCreated回调中初始化(-_-メ)
 
+2016.7.15
+- 删除播放页面的测试按钮与信息显示
+- 修改本地视频页面单个item的布局
+

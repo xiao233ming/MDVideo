@@ -32,23 +32,14 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.accessibility.CaptioningManager;
-import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.studyjams.mdvideo.PlayerModule.widget.DashRendererBuilder;
-import com.studyjams.mdvideo.PlayerModule.widget.DemoPlayer;
-import com.studyjams.mdvideo.PlayerModule.widget.DemoPlayer.RendererBuilder;
-import com.studyjams.mdvideo.PlayerModule.widget.ExtractorRendererBuilder;
-import com.studyjams.mdvideo.PlayerModule.widget.HlsRendererBuilder;
-import com.studyjams.mdvideo.PlayerModule.widget.SmoothStreamingRendererBuilder;
 import com.google.android.exoplayer.AspectRatioFrameLayout;
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
@@ -67,10 +58,15 @@ import com.google.android.exoplayer.metadata.id3.TxxxFrame;
 import com.google.android.exoplayer.text.CaptionStyleCompat;
 import com.google.android.exoplayer.text.Cue;
 import com.google.android.exoplayer.text.SubtitleLayout;
-import com.google.android.exoplayer.util.DebugTextViewHelper;
 import com.google.android.exoplayer.util.MimeTypes;
 import com.google.android.exoplayer.util.Util;
 import com.google.android.exoplayer.util.VerboseLogUtil;
+import com.studyjams.mdvideo.PlayerModule.widget.DashRendererBuilder;
+import com.studyjams.mdvideo.PlayerModule.widget.DemoPlayer;
+import com.studyjams.mdvideo.PlayerModule.widget.DemoPlayer.RendererBuilder;
+import com.studyjams.mdvideo.PlayerModule.widget.ExtractorRendererBuilder;
+import com.studyjams.mdvideo.PlayerModule.widget.HlsRendererBuilder;
+import com.studyjams.mdvideo.PlayerModule.widget.SmoothStreamingRendererBuilder;
 import com.studyjams.mdvideo.R;
 
 import java.net.CookieHandler;
@@ -82,7 +78,7 @@ import java.util.Locale;
 /**
  * An activity that plays media using {@link DemoPlayer}.
  */
-public class PlayerActivity extends Activity implements SurfaceHolder.Callback, OnClickListener,
+public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         DemoPlayer.Listener, DemoPlayer.CaptionListener, DemoPlayer.Id3MetadataListener,
         AudioCapabilitiesReceiver.Listener {
 
@@ -111,16 +107,16 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
     private View shutterView;
     private AspectRatioFrameLayout videoFrame;
     private SurfaceView surfaceView;
-    private TextView debugTextView;
-    private TextView playerStateTextView;
+//    private TextView debugTextView;
+//    private TextView playerStateTextView;
     private SubtitleLayout subtitleLayout;
-    private Button videoButton;
-    private Button audioButton;
-    private Button textButton;
-    private Button retryButton;
+//    private Button videoButton;
+//    private Button audioButton;
+//    private Button textButton;
+//    private Button retryButton;
 
     private DemoPlayer player;
-    private DebugTextViewHelper debugViewHelper;
+//    private DebugTextViewHelper debugViewHelper;
     private boolean playerNeedsPrepare;
 
     private long playerPosition;
@@ -169,18 +165,18 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         videoFrame = (AspectRatioFrameLayout) findViewById(R.id.video_frame);
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceView.getHolder().addCallback(this);
-        debugTextView = (TextView) findViewById(R.id.debug_text_view);
+//        debugTextView = (TextView) findViewById(R.id.debug_text_view);
 
-        playerStateTextView = (TextView) findViewById(R.id.player_state_view);
+//        playerStateTextView = (TextView) findViewById(R.id.player_state_view);
         subtitleLayout = (SubtitleLayout) findViewById(R.id.subtitles);
 
         mediaController = new KeyCompatibleMediaController(this);
         mediaController.setAnchorView(root);
-        retryButton = (Button) findViewById(R.id.retry_button);
-        retryButton.setOnClickListener(this);
-        videoButton = (Button) findViewById(R.id.video_controls);
-        audioButton = (Button) findViewById(R.id.audio_controls);
-        textButton = (Button) findViewById(R.id.text_controls);
+//        retryButton = (Button) findViewById(R.id.retry_button);
+//        retryButton.setOnClickListener(this);
+//        videoButton = (Button) findViewById(R.id.video_controls);
+//        audioButton = (Button) findViewById(R.id.audio_controls);
+//        textButton = (Button) findViewById(R.id.text_controls);
 
         CookieHandler currentHandler = CookieHandler.getDefault();
         if (currentHandler != defaultCookieManager) {
@@ -277,12 +273,12 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
     // OnClickListener methods
 
-    @Override
-    public void onClick(View view) {
-        if (view == retryButton) {
-            preparePlayer(true);
-        }
-    }
+//    @Override
+//    public void onClick(View view) {
+//        if (view == retryButton) {
+//            preparePlayer(true);
+//        }
+//    }
 
     // AudioCapabilitiesReceiver.Listener methods
 
@@ -373,8 +369,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
             player.addListener(eventLogger);
             player.setInfoListener(eventLogger);
             player.setInternalErrorListener(eventLogger);
-            debugViewHelper = new DebugTextViewHelper(player, debugTextView);
-            debugViewHelper.start();
+//            debugViewHelper = new DebugTextViewHelper(player, debugTextView);
+//            debugViewHelper.start();
         }
         if (playerNeedsPrepare) {
             player.prepare();
@@ -387,8 +383,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
     private void releasePlayer() {
         if (player != null) {
-            debugViewHelper.stop();
-            debugViewHelper = null;
+//            debugViewHelper.stop();
+//            debugViewHelper = null;
             playerPosition = player.getCurrentPosition();
             player.release();
             player = null;
@@ -425,7 +421,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
                 text += "unknown";
                 break;
         }
-        playerStateTextView.setText(text);
+//        playerStateTextView.setText(text);
+        Log.d(TAG, "=====onStateChanged: " + text);
         updateButtonVisibilities();
     }
 
@@ -476,10 +473,10 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
     // User controls
 
     private void updateButtonVisibilities() {
-        retryButton.setVisibility(playerNeedsPrepare ? View.VISIBLE : View.GONE);
-        videoButton.setVisibility(haveTracks(DemoPlayer.TYPE_VIDEO) ? View.VISIBLE : View.GONE);
-        audioButton.setVisibility(haveTracks(DemoPlayer.TYPE_AUDIO) ? View.VISIBLE : View.GONE);
-        textButton.setVisibility(haveTracks(DemoPlayer.TYPE_TEXT) ? View.VISIBLE : View.GONE);
+//        retryButton.setVisibility(playerNeedsPrepare ? View.VISIBLE : View.GONE);
+//        videoButton.setVisibility(haveTracks(DemoPlayer.TYPE_VIDEO) ? View.VISIBLE : View.GONE);
+//        audioButton.setVisibility(haveTracks(DemoPlayer.TYPE_AUDIO) ? View.VISIBLE : View.GONE);
+//        textButton.setVisibility(haveTracks(DemoPlayer.TYPE_TEXT) ? View.VISIBLE : View.GONE);
     }
 
     private boolean haveTracks(int type) {
@@ -494,7 +491,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
     //add by arthar
     public void exitPlayer(View v){
-        toggleControlsVisibility();
         super.onBackPressed();
     }
 

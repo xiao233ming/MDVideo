@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,14 +21,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by syamiadmin on 2016/7/12.
  */
 public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVideoCursorAdapter.VideoViewHolder> {
 
+    private static final String TAG = "LocalVideoCursorAdapter";
     public static final Uri LOCAL_VIDEO_URI = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
     private List<Video> mVideoData;
+    private SimpleDateFormat mDateFormat;
     /**
      * Constructor.
      * @param context The Context the Adapter is displayed in.
@@ -36,6 +41,10 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
 
         setupCursorAdapter(null, 0, R.layout.local_video_list_item, false);
         mVideoData = new ArrayList<>();
+
+        /**Format time**/
+        mDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        mDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0:00"));
     }
 
     /**
@@ -79,13 +88,15 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
         public final ImageView mThumbnail;
         public final TextView mTitle;
         public final TextView mInfo;
+        public final TextView mSize;
 
         public VideoViewHolder(View view) {
             super(view);
 
-            mThumbnail = (ImageView) view.findViewById(R.id.image);
-            mTitle = (TextView) view.findViewById(R.id.title);
-            mInfo = (TextView) view.findViewById(R.id.info);
+            mThumbnail = (ImageView) view.findViewById(R.id.local_list_item_image);
+            mTitle = (TextView) view.findViewById(R.id.local_list_item_title);
+            mInfo = (TextView) view.findViewById(R.id.local_list_item_info);
+            mSize = (TextView) view.findViewById(R.id.local_list_item_size);
         }
 
         @Override
@@ -101,6 +112,10 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
             long duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
             long size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
 
+            Log.d(TAG, "bindCursor: " + "id=" + id + "\ntitle=" + title + "\nalbum=" + album
+            + "\nartist=" + artist + "\ndisplayName=" + displayName + "\nmimeType=" + mimeType
+            + "\npath=" + path + "\nduration=" + duration + "\nsize=" + size);
+
             video.setId(id);
             video.setTitle(title);
             video.setAlbum(album);
@@ -110,12 +125,13 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
             video.setPath(path);
             video.setDuration(duration);
             video.setSize(size);
-            //备份一份数据便于事件响应调用
+
+            /**save data for click event**/
             mVideoData.add(getAdapterPosition(),video);
 
             mTitle.setText(title);
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
-            mInfo.setText(formatter.format(duration));
+            mInfo.setText(mDateFormat.format(duration));
+            mSize.setText(Formatter.formatFileSize(mContext,size));
             ImageLoader.LoadNormalImage(mContext,path,mThumbnail);
         }
     }

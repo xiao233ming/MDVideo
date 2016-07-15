@@ -15,7 +15,6 @@
 -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,93 +46,24 @@
             android:layout_height="match_parent"/>
 
     </com.google.android.exoplayer.AspectRatioFrameLayout>
-    <!---->
+
     <LinearLayout
+        android:id="@+id/controls_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#88000000"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:background="@color/colorHalfTransparent"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/player_state_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"/>
-
-        <TextView
-            android:id="@+id/debug_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"/>
-
-        <LinearLayout
-            android:id="@+id/controls_root"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <ImageButton
-                android:id="@+id/player_exit"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:padding="10dp"
-                android:background="@color/colorTransparent"
-                android:src="@mipmap/abc_ic_ab_back_mtrl_am_alpha"
-                android:scaleType="fitCenter"
-                android:onClick="exitPlayer"/>
-
-            <Button
-                android:id="@+id/video_controls"
-                style="@style/DemoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="showVideoPopup"
-                android:text="@string/video"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/audio_controls"
-                style="@style/DemoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="showAudioPopup"
-                android:text="@string/audio"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/text_controls"
-                style="@style/DemoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="showTextPopup"
-                android:text="@string/text"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/verbose_log_controls"
-                style="@style/DemoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="showVerboseLogPopup"
-                android:text="@string/logging"/>
-
-            <Button
-                android:id="@+id/retry_button"
-                style="@style/DemoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retry"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-
+        <ImageButton
+            android:id="@+id/player_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:onClick="exitPlayer"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/abc_ic_ab_back_mtrl_am_alpha"/>
     </LinearLayout>
 
 </FrameLayout>
