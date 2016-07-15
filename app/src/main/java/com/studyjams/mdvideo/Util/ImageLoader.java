@@ -12,7 +12,7 @@ import com.studyjams.mdvideo.R;
 public class ImageLoader {
     public static void LoadNormalImage(Context context, String url, ImageView imageView){
         Glide.with(context).load(url)
-                .placeholder(R.drawable.empty_photo)
+                .placeholder(R.mipmap.empty_photo)
                 .crossFade()
                 .into(imageView);
     }

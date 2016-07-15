@@ -1,5 +1,7 @@
 package com.studyjams.mdvideo;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -106,10 +108,11 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.menu_video_share:
-
+                shareWithFriends();
                 break;
             case R.id.menu_video_send:
 
+                sendEmail();
                 break;
             default:
 
@@ -119,5 +122,27 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Share with friends
+     **/
+    private void shareWithFriends() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.send_share_title));
+        intent.setType("text/plain");
+        startActivity(Intent.createChooser(intent, getString(R.string.send_share_title)));
+    }
+
+    /**
+     * Feedback to the developers
+     */
+    private void sendEmail() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse(getString(R.string.send_share_email)));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
