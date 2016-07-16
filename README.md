@@ -1,3 +1,4 @@
+![](https://github.com/AndroidTips/MDVideo/blob/master/docs/demo.gif)
 # Material Design Video
 
 MDVideo是在Google Study Jams 2016活动第二阶段发起的一个团队协作项目。我们希望在完全不考虑商业利益的环境下，开发一款Material Design
