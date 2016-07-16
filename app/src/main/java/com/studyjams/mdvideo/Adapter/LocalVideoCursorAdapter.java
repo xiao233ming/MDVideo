@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.studyjams.mdvideo.Bean.Video;
-import com.studyjams.mdvideo.ProRecyclerView.RecyclerViewCursorAdapter;
-import com.studyjams.mdvideo.ProRecyclerView.RecyclerViewCursorViewHolder;
+import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorAdapter;
+import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorViewHolder;
 import com.studyjams.mdvideo.R;
 import com.studyjams.mdvideo.Util.ImageLoader;
 

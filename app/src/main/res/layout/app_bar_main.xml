@@ -35,4 +35,18 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_behavior="com.studyjams.mdvideo.View.FloatingActionButtonScrollBehavior"
+        android:src="@drawable/ic_create_new_folder_"
+        app:backgroundTint="@color/primary"
+        app:elevation="6dp"
+        app:rippleColor="@color/primaryLight"
+        app:pressedTranslationZ="25dp"
+        android:clickable="true"
+        app:fabSize="normal"/>
 </android.support.design.widget.CoordinatorLayout>

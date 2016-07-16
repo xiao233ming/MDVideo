@@ -212,7 +212,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     private void onShown() {
-        Log.d(TAG, "=================onShown: ");
+
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
