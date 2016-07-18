@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "99795990751",
+    "firebase_url": "https://mdvideo-2ffba.firebaseio.com",
+    "project_id": "mdvideo-2ffba",
+    "storage_bucket": "mdvideo-2ffba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99795990751:android:82104c45bb975642",
+        "android_client_info": {
+          "package_name": "com.studyjams.mdvideo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99795990751-u6o2ncntc0oiknq2i5ivct4q0p6ku46i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTYGA_Ug5iTsCiUpwxPoYYu5qeoZ3Wg7M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
