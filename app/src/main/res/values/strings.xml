@@ -17,6 +17,8 @@
     <string name="menu_video_send">意见与反馈</string>
     <string name="menu_video_info">视频信息</string>
     <string name="menu_title">一款简单的播放器</string>
+    <string name="menu_folder_title">请选择要打开的视频</string>
+    <string name="menu_folder_desc">请安装文件管理器</string>
 
     <!--分享与反馈-->
     <string name="send_share_url">APP下载的url</string>

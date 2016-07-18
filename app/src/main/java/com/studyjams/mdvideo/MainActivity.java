@@ -1,8 +1,10 @@
 package com.studyjams.mdvideo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -14,8 +16,12 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.exoplayer.util.Util;
 import com.studyjams.mdvideo.Adapter.MainPagerAdapter;
+import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private static final int REQUEST_CODE = 1;
     private ViewPager mViewpager;
     private List<String> mData;
 
@@ -46,6 +53,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.main_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fileChooser();
+            }
+        });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,6 +75,23 @@ public class MainActivity extends AppCompatActivity
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),mData);
         mViewpager.setAdapter(mainPagerAdapter);
         tabLayout.setupWithViewPager(mViewpager);
+        mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                /**切换页面时显示文件打开**/
+                fab.show();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -103,10 +135,6 @@ public class MainActivity extends AppCompatActivity
 
         switch(item.getItemId()){
 
-            case R.id.menu_video_display:
-
-                break;
-
             case R.id.menu_video_share:
                 shareWithFriends();
                 break;
@@ -122,6 +150,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            switch (requestCode){
+                case REQUEST_CODE:
+                    Intent intent = new Intent(this, PlayerActivity.class)
+                            .setData(data.getData())
+                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, REQUEST_CODE)
+                            .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
+                            .putExtra(PlayerActivity.PROVIDER_EXTRA, "");
+                    startActivity(intent);
+                    break;
+                default:break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -143,6 +191,18 @@ public class MainActivity extends AppCompatActivity
         intent.setData(Uri.parse(getString(R.string.send_share_email)));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
+        }
+    }
+
+    private void fileChooser(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("video/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.menu_folder_title)), REQUEST_CODE);
+        }else{
+            // Potentially direct the user to the Market with a Toast
+            Toast.makeText(this, getString(R.string.menu_folder_desc), Toast.LENGTH_SHORT).show();
         }
     }
 }

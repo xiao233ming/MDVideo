@@ -18,8 +18,8 @@ import android.view.ViewGroup;
 
 import com.studyjams.mdvideo.Adapter.LocalVideoCursorAdapter;
 import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
-import com.studyjams.mdvideo.ProRecyclerView.RecyclerViewItemClickListener;
 import com.studyjams.mdvideo.R;
+import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewItemClickListener;
 
 /**
  * Created by zwx on 2016/7/9.
@@ -78,8 +78,6 @@ public class LocalVideoListFragment extends Fragment implements LoaderManager.Lo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // Initialize Video Loader
         getActivity().getSupportLoaderManager().initLoader(LOCAL_VIDEO_LOADER, null, this);
     }
 

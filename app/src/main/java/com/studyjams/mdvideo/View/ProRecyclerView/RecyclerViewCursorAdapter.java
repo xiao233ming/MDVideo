@@ -1,4 +1,4 @@
-package com.studyjams.mdvideo.ProRecyclerView;
+package com.studyjams.mdvideo.View.ProRecyclerView;
 
 import android.content.Context;
 import android.database.Cursor;
