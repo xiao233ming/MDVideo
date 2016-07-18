@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "99795990751",
-    "firebase_url": "https://mdvideo-2ffba.firebaseio.com",
-    "project_id": "mdvideo-2ffba",
-    "storage_bucket": "mdvideo-2ffba.appspot.com"
+    "project_number": "1066815599117",
+    "firebase_url": "https://mdvideo-d2436.firebaseio.com",
+    "project_id": "mdvideo-d2436",
+    "storage_bucket": "mdvideo-d2436.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:99795990751:android:82104c45bb975642",
+        "mobilesdk_app_id": "1:1066815599117:android:82104c45bb975642",
         "android_client_info": {
           "package_name": "com.studyjams.mdvideo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "99795990751-u6o2ncntc0oiknq2i5ivct4q0p6ku46i.apps.googleusercontent.com",
+          "client_id": "1066815599117-332c5d4e4331k2o58s9a234p0ln68a3c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBTYGA_Ug5iTsCiUpwxPoYYu5qeoZ3Wg7M"
+          "current_key": "AIzaSyA-TJWZdHp_K2P1_08ImowTNpvHAeSDARM"
         }
       ],
       "services": {
