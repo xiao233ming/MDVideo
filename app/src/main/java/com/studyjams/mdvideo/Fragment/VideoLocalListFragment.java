@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.studyjams.mdvideo.Adapter.LocalVideoCursorAdapter;
+import com.studyjams.mdvideo.Adapter.VideoLocalCursorAdapter;
 import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
 import com.studyjams.mdvideo.R;
 import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewItemClickListener;
@@ -25,7 +25,7 @@ import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewItemClickListener;
  * Created by zwx on 2016/7/9.
  */
 
-public class LocalVideoListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+public class VideoLocalListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         RecyclerViewItemClickListener.OnItemClickListener{
     private static final String TAG = "LocalVideoListFragment";
     private static final String ARG_PARAM = "param";
@@ -36,14 +36,14 @@ public class LocalVideoListFragment extends Fragment implements LoaderManager.Lo
 
     //本地视频的loader编号
     private static final int LOCAL_VIDEO_LOADER = 0;
-    private LocalVideoCursorAdapter mLocalVideoCursorAdapter;
+    private VideoLocalCursorAdapter mLocalVideoCursorAdapter;
 
-    public LocalVideoListFragment() {
+    public VideoLocalListFragment() {
         // Required empty public constructor
     }
 
-    public static LocalVideoListFragment newInstance(String param) {
-        LocalVideoListFragment fragment = new LocalVideoListFragment();
+    public static VideoLocalListFragment newInstance(String param) {
+        VideoLocalListFragment fragment = new VideoLocalListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM, param);
         fragment.setArguments(args);
@@ -61,7 +61,7 @@ public class LocalVideoListFragment extends Fragment implements LoaderManager.Lo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View parent = inflater.inflate(R.layout.fragment_local_video_list, container, false);
+        View parent = inflater.inflate(R.layout.fragment_video_local_list, container, false);
         mRecyclerView = (RecyclerView) parent.findViewById(R.id.local_video_list_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //设置布局管理器
@@ -69,7 +69,7 @@ public class LocalVideoListFragment extends Fragment implements LoaderManager.Lo
         //设置为垂直布局，这也是默认的
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
 
-        mLocalVideoCursorAdapter = new LocalVideoCursorAdapter(getActivity());
+        mLocalVideoCursorAdapter = new VideoLocalCursorAdapter(getActivity());
         mRecyclerView.setAdapter(mLocalVideoCursorAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(getActivity(), this));
         return parent;
@@ -97,7 +97,7 @@ public class LocalVideoListFragment extends Fragment implements LoaderManager.Lo
             case LOCAL_VIDEO_LOADER:
                 return new CursorLoader(
                         getActivity(),
-                        LocalVideoCursorAdapter.LOCAL_VIDEO_URI,
+                        VideoLocalCursorAdapter.LOCAL_VIDEO_URI,
                         null,
                         null,
                         null,

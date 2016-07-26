@@ -61,6 +61,9 @@ import com.google.android.exoplayer.text.SubtitleLayout;
 import com.google.android.exoplayer.util.MimeTypes;
 import com.google.android.exoplayer.util.Util;
 import com.google.android.exoplayer.util.VerboseLogUtil;
+import com.studyjams.mdvideo.DatabaseHelper.SyncSqlHandler;
+import com.studyjams.mdvideo.DatabaseHelper.Tables;
+import com.studyjams.mdvideo.DatabaseHelper.VideoProvider;
 import com.studyjams.mdvideo.PlayerModule.widget.DashRendererBuilder;
 import com.studyjams.mdvideo.PlayerModule.widget.DemoPlayer;
 import com.studyjams.mdvideo.PlayerModule.widget.DemoPlayer.RendererBuilder;
@@ -129,6 +132,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     private AudioCapabilitiesReceiver audioCapabilitiesReceiver;
 
+    //数据库异步操作类
+    private SyncSqlHandler mSyncSqlHandler;
+
     // Activity lifecycle
 
     @Override
@@ -185,6 +191,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
         audioCapabilitiesReceiver = new AudioCapabilitiesReceiver(this, this);
         audioCapabilitiesReceiver.register();
+
+        //初始化为播放历史表单的操作类
+        mSyncSqlHandler = new SyncSqlHandler(getContentResolver(), VideoProvider.VIDEO_PLAY_HISTORY_URI);
     }
 
     @Override
@@ -227,6 +236,23 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA, inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
             contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
             provider = intent.getStringExtra(PROVIDER_EXTRA);
+
+            /**
+             * token:一个令牌，主要用来标识查询,保证唯一即可.需要跟onXXXComplete方法传入的一致。
+             * （当然你也可以不一致，同样在数据库的操作结束后会调用对应的onXXXComplete方法 ）
+             * cookie:你想传给onXXXComplete方法使用的一个对象。(没有的话传递null即可)
+             * Uri :uri（进行查询的通用资源标志符）:
+             * projection: 查询的列
+             * selection:  限制条件
+             * selectionArgs: 查询参数
+             * orderBy: 排序条件
+             */
+            mSyncSqlHandler.startQuery(SyncSqlHandler.Query_Insert, VideoProvider.VIDEO_PLAY_HISTORY_URI,
+                    VideoProvider.VIDEO_PLAY_HISTORY_URI,
+                    new String[]{Tables.Video_path},
+                    Tables.Video_path + "=" + contentUri.toString(),
+                    null,
+                    null);
         }
 
         configureSubtitleView();

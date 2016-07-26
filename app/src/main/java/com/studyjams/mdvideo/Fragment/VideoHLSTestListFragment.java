@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.studyjams.mdvideo.Adapter.VideoListAdapter;
+import com.studyjams.mdvideo.Adapter.VideoHLSTestListAdapter;
 import com.studyjams.mdvideo.R;
 
 
-public class VideoListFragment extends Fragment {
+public class VideoHLSTestListFragment extends Fragment {
 
     private static final String TAG = "VideoListFragment";
     private static final String ARG_PARAM = "param";
@@ -21,14 +21,14 @@ public class VideoListFragment extends Fragment {
     private String mParam;
 
     private RecyclerView mRecyclerView;
-    private VideoListAdapter mVideoListAdapter;
+    private VideoHLSTestListAdapter mVideoListAdapter;
 
-    public VideoListFragment() {
+    public VideoHLSTestListFragment() {
         // Required empty public constructor
     }
 
-    public static VideoListFragment newInstance(String param) {
-        VideoListFragment fragment = new VideoListFragment();
+    public static VideoHLSTestListFragment newInstance(String param) {
+        VideoHLSTestListFragment fragment = new VideoHLSTestListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM, param);
         fragment.setArguments(args);
@@ -50,7 +50,7 @@ public class VideoListFragment extends Fragment {
         View parent = inflater.inflate(R.layout.fragment_video_list, container, false);
         mRecyclerView = (RecyclerView)parent.findViewById(R.id.video_list_recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        mVideoListAdapter = new VideoListAdapter(getActivity());
+        mVideoListAdapter = new VideoHLSTestListAdapter(getActivity());
         mRecyclerView.setAdapter(mVideoListAdapter);
         return parent;
     }

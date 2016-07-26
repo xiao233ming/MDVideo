@@ -2,20 +2,17 @@ package com.studyjams.mdvideo.Adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.studyjams.mdvideo.Bean.Video;
+import com.studyjams.mdvideo.Bean.VideoBean;
+import com.studyjams.mdvideo.DatabaseHelper.Tables;
+import com.studyjams.mdvideo.R;
 import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorAdapter;
 import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorViewHolder;
-import com.studyjams.mdvideo.R;
-import com.studyjams.mdvideo.Util.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,20 +23,19 @@ import java.util.TimeZone;
 /**
  * Created by syamiadmin on 2016/7/12.
  */
-public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVideoCursorAdapter.VideoViewHolder> {
+public class VideoPlayHistoryCursorAdapter extends RecyclerViewCursorAdapter<VideoPlayHistoryCursorAdapter.VideoViewHolder> {
 
     private static final String TAG = "LocalVideoCursorAdapter";
-    public static final Uri LOCAL_VIDEO_URI = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-    private List<Video> mVideoData;
+    private List<VideoBean> mVideoData;
     private SimpleDateFormat mDateFormat;
     /**
      * Constructor.
      * @param context The Context the Adapter is displayed in.
      */
-    public LocalVideoCursorAdapter(Context context) {
+    public VideoPlayHistoryCursorAdapter(Context context) {
         super(context);
 
-        setupCursorAdapter(null, 0, R.layout.local_video_list_item, false);
+        setupCursorAdapter(null, 0, R.layout.video_play_history_item, false);
         mVideoData = new ArrayList<>();
 
         /**Format time**/
@@ -52,7 +48,8 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
      * @param position
      * @return
      */
-    public Video getItemData(int position){
+    public VideoBean getItemData(int position){
+
         return mVideoData.get(position);
     }
 
@@ -93,24 +90,26 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
         public VideoViewHolder(View view) {
             super(view);
 
-            mThumbnail = (ImageView) view.findViewById(R.id.local_list_item_image);
-            mTitle = (TextView) view.findViewById(R.id.local_list_item_title);
-            mInfo = (TextView) view.findViewById(R.id.local_list_item_info);
-            mSize = (TextView) view.findViewById(R.id.local_list_item_size);
+            mThumbnail = (ImageView) view.findViewById(R.id.play_history_item_image);
+            mTitle = (TextView) view.findViewById(R.id.play_history_item_title);
+            mInfo = (TextView) view.findViewById(R.id.play_history_item_info);
+            mSize = (TextView) view.findViewById(R.id.play_history_item_size);
         }
 
         @Override
         public void bindCursor(Cursor cursor) {
-            Video video = new Video();
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
-            String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
-            String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ALBUM));
-            String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST));
-            String displayName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
-            String mimeType = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
-            String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
-            long duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
-            long size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+            VideoBean video = new VideoBean();
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(Tables.Video_id));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_title));
+            String album = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_album));
+            String artist = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_artist));
+            String displayName = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_displayName));
+            String mimeType = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_mimeType));
+            String path = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_path));
+            long playDuration = cursor.getLong(cursor.getColumnIndexOrThrow(Tables.Video_playDuration));
+            long duration = cursor.getInt(cursor.getColumnIndexOrThrow(Tables.Video_duration));
+            long size = cursor.getLong(cursor.getColumnIndexOrThrow(Tables.Video_size));
+            String createdDate = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_createdDate));
 
             Log.d(TAG, "bindCursor: " + "id=" + id + "\ntitle=" + title + "\nalbum=" + album
             + "\nartist=" + artist + "\ndisplayName=" + displayName + "\nmimeType=" + mimeType
@@ -124,15 +123,16 @@ public class LocalVideoCursorAdapter extends RecyclerViewCursorAdapter<LocalVide
             video.setMimeType(mimeType);
             video.setPath(path);
             video.setDuration(duration);
+            video.setPlayDuration(playDuration);
             video.setSize(size);
-
+            video.setCreatedDate(createdDate);
             /**save data for click event**/
             mVideoData.add(getAdapterPosition(),video);
 
             mTitle.setText(title);
-            mInfo.setText(mDateFormat.format(duration));
-            mSize.setText(Formatter.formatFileSize(mContext,size));
-            ImageLoader.LoadNormalImage(mContext,path,mThumbnail);
+            mInfo.setText(mDateFormat.format(playDuration));
+            mSize.setText(createdDate);
+            mThumbnail.setImageResource(Integer.valueOf(path));
         }
     }
 }

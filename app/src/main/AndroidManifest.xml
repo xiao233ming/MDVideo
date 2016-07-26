@@ -57,6 +57,16 @@
                 <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
+
+        <!--用来存储视频信息的provider-->
+        <provider
+            android:name=".DatabaseHelper.VideoProvider"
+            android:authorities="com.studyjams.mdvideo.VideoProvider"
+            android:enabled="true"
+            android:multiprocess="true"
+            android:permission="@string/app_name"
+            android:exported="true">
+        </provider>
     </application>
 
 </manifest>

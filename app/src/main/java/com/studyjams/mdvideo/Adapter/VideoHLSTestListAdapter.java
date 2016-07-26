@@ -14,19 +14,19 @@ import com.studyjams.mdvideo.ApiConstant.Samples;
 import com.studyjams.mdvideo.ApiConstant.Samples.Sample;
 import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
 import com.studyjams.mdvideo.R;
-import com.studyjams.mdvideo.Util.ImageLoader;
+import com.studyjams.mdvideo.Util.Tools;
 
 /**
  * Created by syamiadmin on 2016/6/8.
  */
-public class VideoListAdapter extends RecyclerView.Adapter{
+public class VideoHLSTestListAdapter extends RecyclerView.Adapter{
 
     private static final String TAG = "VideoListAdapter";
 
     private Context mContext;
     private Sample[] mData;
     private LayoutInflater mLayoutInflater;
-    public VideoListAdapter(Context context) {
+    public VideoHLSTestListAdapter(Context context) {
         mContext = context;
         mData = Samples.LIVE_DASH;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -45,7 +45,7 @@ public class VideoListAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         VideoViewHolder videoViewHolder = (VideoViewHolder)holder;
-        ImageLoader.LoadNormalImage(mContext,mData[position].uri,videoViewHolder.imageView);
+        Tools.LoadNormalImage(mContext,mData[position].uri,videoViewHolder.imageView);
         videoViewHolder.textView.setText(mData[position].name);
     }
 
