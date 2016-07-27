@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity
                             .setData(data.getData())
                             .putExtra(PlayerActivity.CONTENT_ID_EXTRA, REQUEST_CODE)
                             .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
-                            .putExtra(PlayerActivity.PROVIDER_EXTRA, "");
+                            .putExtra(PlayerActivity.PROVIDER_EXTRA, "0");
                     startActivity(intent);
                     break;
                 default:break;

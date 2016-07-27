@@ -224,7 +224,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             contentUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             contentType = Util.TYPE_SS;
             contentId = "";
-            provider = "";
+            provider = "0";
         } else{
             contentUri = intent.getData();
             contentType = intent.getIntExtra(CONTENT_TYPE_EXTRA, inferContentType(contentUri, intent.getStringExtra(CONTENT_EXT_EXTRA)));
