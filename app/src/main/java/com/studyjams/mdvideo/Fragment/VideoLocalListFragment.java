@@ -1,6 +1,7 @@
 package com.studyjams.mdvideo.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,10 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
     /**Loader管理器**/
     private LoaderManager mLoaderManager;
     private VideoObserver mVideoObserver;
+
+    private OnVideoRefreshListener mOnVideoRefreshListener;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public VideoLocalListFragment() {
         // Required empty public constructor
     }
@@ -68,10 +74,40 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
         }
     }
 
+    // Container Activity must implement this interface
+    public interface OnVideoRefreshListener {
+         void onVideoRefresh();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mOnVideoRefreshListener = (OnVideoRefreshListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnVideoRefreshListener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_video_local_list, container, false);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)parent.findViewById(R.id.local_video_list_SwipeRefreshLayout);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorIcon);
+        mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mOnVideoRefreshListener.onVideoRefresh();
+            }
+        });
+
         mRecyclerView = (RecyclerView) parent.findViewById(R.id.local_video_list_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //设置布局管理器
@@ -164,6 +200,11 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
                 throw new UnsupportedOperationException("Unknown loader id: " + loader.getId());
         }
 
+        /**如果数据刷新完成，隐藏下拉刷新**/
+        if (mSwipeRefreshLayout.isRefreshing()) {
+
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private class VideoObserver extends ContentObserver {

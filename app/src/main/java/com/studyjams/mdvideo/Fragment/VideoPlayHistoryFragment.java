@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +48,8 @@ public class VideoPlayHistoryFragment extends Fragment implements LoaderManager.
     private LoaderManager mLoaderManager;
     private VideoObserver mVideoObserver;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     public VideoPlayHistoryFragment() {
         // Required empty public constructor
     }
@@ -71,6 +74,16 @@ public class VideoPlayHistoryFragment extends Fragment implements LoaderManager.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_video_play_history, container, false);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)parent.findViewById(R.id.video_play_history_SwipeRefreshLayout);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorIcon);
+        mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mLoaderManager.restartLoader(VIDEO_PLAY_HISTORY_LOADER,null,VideoPlayHistoryFragment.this);
+            }
+        });
         mRecyclerView = (RecyclerView) parent.findViewById(R.id.video_play_history_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -151,7 +164,11 @@ public class VideoPlayHistoryFragment extends Fragment implements LoaderManager.
             default:
                 throw new UnsupportedOperationException("Unknown loader id: " + loader.getId());
         }
+        /**如果数据刷新完成，隐藏下拉刷新**/
+        if (mSwipeRefreshLayout.isRefreshing()) {
 
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private class VideoObserver extends ContentObserver {

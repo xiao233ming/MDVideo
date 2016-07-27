@@ -30,13 +30,14 @@ import com.studyjams.mdvideo.Adapter.MainPagerAdapter;
 import com.studyjams.mdvideo.DatabaseHelper.SyncSqlHandler;
 import com.studyjams.mdvideo.DatabaseHelper.Tables;
 import com.studyjams.mdvideo.DatabaseHelper.VideoProvider;
+import com.studyjams.mdvideo.Fragment.VideoLocalListFragment;
 import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,VideoLocalListFragment.OnVideoRefreshListener {
 
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 1;
@@ -70,6 +71,16 @@ public class MainActivity extends AppCompatActivity
         mIntentFilter.addAction(PLAY_HISTORY_ACTION);
         registerReceiver(mMyReceiver,mIntentFilter);
 
+        mSyncSqlHandler = new SyncSqlHandler(getContentResolver());
+        refreshData();
+    }
+
+    @Override
+    public void onVideoRefresh() {
+        refreshData();
+    }
+
+    public void refreshData(){
         /**
          * token:一个令牌，主要用来标识查询,保证唯一即可.需要跟onXXXComplete方法传入的一致。
          * （当然你也可以不一致，同样在数据库的操作结束后会调用对应的onXXXComplete方法 ）
@@ -80,7 +91,6 @@ public class MainActivity extends AppCompatActivity
          * selectionArgs: 查询参数
          * orderBy: 排序条件
          */
-        mSyncSqlHandler = new SyncSqlHandler(getContentResolver());
         mSyncSqlHandler.startQuery(SyncSqlHandler.MEDIA_QUERY_INSERT, null, MEDIA_VIDEO_URI, null, null, null,null);
         mSyncSqlHandler.startQuery(SyncSqlHandler.LOCAL_QUERY_DELETE,null,
                 VideoProvider.VIDEO_PLAY_HISTORY_URI,

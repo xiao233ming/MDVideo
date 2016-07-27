@@ -2,7 +2,6 @@ package com.studyjams.mdvideo;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
 
 /**
  * Created by syamiadmin on 2016/6/12.
@@ -16,6 +15,6 @@ public class MDVideoApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+//        MultiDex.install(this);
     }
 }

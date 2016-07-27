@@ -99,6 +99,7 @@ public class SyncSqlHandler extends AsyncQueryHandler{
                 }else{
                     String path = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_path));
                     Log.d(TAG, "onQueryComplete: LOCAL_QUERY_INSERT" + path);
+                    mContentResolver.notifyChange(VideoProvider.VIDEO_PLAY_HISTORY_URI, null);
                 }
 
                 break;
@@ -117,7 +118,9 @@ public class SyncSqlHandler extends AsyncQueryHandler{
 
                 break;
 
-            default:break;
+            default:
+
+                break;
         }
         if(cursor != null){
             cursor.close();

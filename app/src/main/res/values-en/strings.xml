@@ -1,31 +1,26 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name" translatable="false">MDVideo</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings" translatable="false">设置</string>
-
     <!--导航菜单-->
 
-    <string name="menu_video_local">本地视频</string>
-    <string name="menu_video_history">播放记录</string>
-    <string name="menu_video_display" translatable="false">显示样式</string>
-    <string name="menu_video_setting" translatable="false">设置</string>
-    <string name="menu_video_share">分享给好友</string>
-    <string name="menu_video_send">意见与反馈</string>
-    <string name="menu_video_info" translatable="false">在线测试</string>
-    <string name="menu_title">一款简单的播放器</string>
-    <string name="menu_folder_title">请选择要打开的视频</string>
-    <string name="menu_folder_desc">请安装文件管理器</string>
+    <string name="menu_video_local">Local</string>
+    <string name="menu_video_history" translatable="false">History</string>
+
+
+    <string name="menu_video_share">Share</string>
+    <string name="menu_video_send">FeedBack</string>
+
+    <string name="menu_title">A simple player</string>
+    <string name="menu_folder_title">Please select the video you want to open</string>
+    <string name="menu_folder_desc">Please install the File Manager</string>
 
     <!--分享与反馈-->
-    <string name="send_share_url" translatable="false">APP下载的url</string>
-    <string name="send_share_title">分享应用给小伙伴~</string>
+    <string name="send_share_title">Share with friends~</string>
     <string name="send_share_email">"mailto:artharyoungcn@gmail.com"</string>
-    <string name="player_play_history">已观看至：</string>
-    <string name="player_play_end">已观看完</string>
+    <string name="player_play_history">Watched to：</string>
+    <string name="player_play_end">Watched End</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
