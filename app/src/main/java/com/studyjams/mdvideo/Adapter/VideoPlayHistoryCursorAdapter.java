@@ -2,7 +2,7 @@ package com.studyjams.mdvideo.Adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
+import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.studyjams.mdvideo.Bean.VideoBean;
 import com.studyjams.mdvideo.DatabaseHelper.Tables;
 import com.studyjams.mdvideo.R;
+import com.studyjams.mdvideo.Util.Tools;
 import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorAdapter;
 import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorViewHolder;
 
@@ -86,6 +87,7 @@ public class VideoPlayHistoryCursorAdapter extends RecyclerViewCursorAdapter<Vid
         public final TextView mTitle;
         public final TextView mInfo;
         public final TextView mSize;
+        public final TextView mDate;
 
         public VideoViewHolder(View view) {
             super(view);
@@ -94,6 +96,7 @@ public class VideoPlayHistoryCursorAdapter extends RecyclerViewCursorAdapter<Vid
             mTitle = (TextView) view.findViewById(R.id.play_history_item_title);
             mInfo = (TextView) view.findViewById(R.id.play_history_item_info);
             mSize = (TextView) view.findViewById(R.id.play_history_item_size);
+            mDate = (TextView) view.findViewById(R.id.play_history_item_time);
         }
 
         @Override
@@ -111,9 +114,9 @@ public class VideoPlayHistoryCursorAdapter extends RecyclerViewCursorAdapter<Vid
             long size = cursor.getLong(cursor.getColumnIndexOrThrow(Tables.Video_size));
             String createdDate = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_createdDate));
 
-            Log.d(TAG, "bindCursor: " + "id=" + id + "\ntitle=" + title + "\nalbum=" + album
-            + "\nartist=" + artist + "\ndisplayName=" + displayName + "\nmimeType=" + mimeType
-            + "\npath=" + path + "\nduration=" + duration + "\nsize=" + size);
+//            Log.d(TAG, "bindCursor: " + "id=" + id + "\ntitle=" + title + "\nalbum=" + album
+//            + "\nartist=" + artist + "\ndisplayName=" + displayName + "\nmimeType=" + mimeType
+//            + "\npath=" + path + "\nduration=" + duration + "\nsize=" + size);
 
             video.setId(id);
             video.setTitle(title);
@@ -128,11 +131,18 @@ public class VideoPlayHistoryCursorAdapter extends RecyclerViewCursorAdapter<Vid
             video.setCreatedDate(createdDate);
             /**save data for click event**/
             mVideoData.add(getAdapterPosition(),video);
+            String str;
+            if(playDuration == duration){
+                str = mContext.getResources().getString(R.string.player_play_end);
+            }else{
+                str = mContext.getResources().getString(R.string.player_play_history) + mDateFormat.format(playDuration);
+            }
 
             mTitle.setText(title);
-            mInfo.setText(mDateFormat.format(playDuration));
-            mSize.setText(createdDate);
-            mThumbnail.setImageResource(Integer.valueOf(path));
+            mInfo.setText(str);
+            mSize.setText(Formatter.formatFileSize(mContext,size));
+            mDate.setText(createdDate);
+            Tools.LoadNormalImage(mContext,path,mThumbnail);
         }
     }
 }

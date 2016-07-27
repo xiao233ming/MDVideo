@@ -5,17 +5,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.studyjams.mdvideo.Bean.VideoBean;
-import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorAdapter;
-import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorViewHolder;
+import com.studyjams.mdvideo.DatabaseHelper.Tables;
 import com.studyjams.mdvideo.R;
 import com.studyjams.mdvideo.Util.Tools;
+import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorAdapter;
+import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewCursorViewHolder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,19 +102,31 @@ public class VideoLocalCursorAdapter extends RecyclerViewCursorAdapter<VideoLoca
         @Override
         public void bindCursor(Cursor cursor) {
             VideoBean video = new VideoBean();
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
-            String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
-            String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ALBUM));
-            String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST));
-            String displayName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
-            String mimeType = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
-            String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
-            long duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
-            long size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+//            int id = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
+//            String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
+//            String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ALBUM));
+//            String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST));
+//            String displayName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
+//            String mimeType = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
+//            String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+//            long duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+//            long size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
 
-            Log.d(TAG, "bindCursor: " + "id=" + id + "\ntitle=" + title + "\nalbum=" + album
-            + "\nartist=" + artist + "\ndisplayName=" + displayName + "\nmimeType=" + mimeType
-            + "\npath=" + path + "\nduration=" + duration + "\nsize=" + size);
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(Tables.Video_id));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_title));
+            String album = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_album));
+            String artist = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_artist));
+            String displayName = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_displayName));
+            String mimeType = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_mimeType));
+            String path = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_path));
+            long playDuration = cursor.getLong(cursor.getColumnIndexOrThrow(Tables.Video_playDuration));
+            long duration = cursor.getInt(cursor.getColumnIndexOrThrow(Tables.Video_duration));
+            long size = cursor.getLong(cursor.getColumnIndexOrThrow(Tables.Video_size));
+            String createdDate = cursor.getString(cursor.getColumnIndexOrThrow(Tables.Video_createdDate));
+
+//            Log.d(TAG, "bindCursor: " + "id=" + id + "\ntitle=" + title + "\nalbum=" + album
+//            + "\nartist=" + artist + "\ndisplayName=" + displayName + "\nmimeType=" + mimeType
+//            + "\npath=" + path + "\nduration=" + duration + "\nsize=" + size);
 
             video.setId(id);
             video.setTitle(title);
@@ -125,6 +137,8 @@ public class VideoLocalCursorAdapter extends RecyclerViewCursorAdapter<VideoLoca
             video.setPath(path);
             video.setDuration(duration);
             video.setSize(size);
+            video.setPlayDuration(playDuration);
+            video.setCreatedDate(createdDate);
 
             /**save data for click event**/
             mVideoData.add(getAdapterPosition(),video);

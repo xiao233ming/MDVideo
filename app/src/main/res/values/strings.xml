@@ -34,6 +34,8 @@
     <string name="player_scale_default">默认</string>
     <string name="player_Rotation">旋转</string>
     <string name="player_exit">退出</string>
+    <string name="player_play_history">已观看至：</string>
+    <string name="player_play_end">已观看完</string>
 
     <!--playerDemo-->
     <string name="enable_background_audio">Play in background</string>

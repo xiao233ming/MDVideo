@@ -1,9 +1,13 @@
 package com.studyjams.mdvideo.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -12,14 +16,18 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.studyjams.mdvideo.Adapter.VideoLocalCursorAdapter;
+import com.studyjams.mdvideo.DatabaseHelper.VideoProvider;
 import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
 import com.studyjams.mdvideo.R;
 import com.studyjams.mdvideo.View.ProRecyclerView.RecyclerViewItemClickListener;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by zwx on 2016/7/9.
@@ -37,7 +45,9 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
     //本地视频的loader编号
     private static final int LOCAL_VIDEO_LOADER = 0;
     private VideoLocalCursorAdapter mLocalVideoCursorAdapter;
-
+    /**Loader管理器**/
+    private LoaderManager mLoaderManager;
+    private VideoObserver mVideoObserver;
     public VideoLocalListFragment() {
         // Required empty public constructor
     }
@@ -78,7 +88,31 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().getSupportLoaderManager().initLoader(LOCAL_VIDEO_LOADER, null, this);
+        mLoaderManager = getActivity().getSupportLoaderManager();
+        mLoaderManager.initLoader(LOCAL_VIDEO_LOADER, null, this);
+        mVideoObserver = new VideoObserver(new MyHandler(getActivity()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //注册数据库变化监听
+        getActivity().getContentResolver().registerContentObserver(VideoProvider.VIDEO_CHANGE_URI, true, mVideoObserver);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //取消数据库变化监听
+        getActivity().getContentResolver().unregisterContentObserver(mVideoObserver);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == getActivity().RESULT_OK){
+
+        }
     }
 
     @Override
@@ -87,7 +121,8 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
             Intent intent = new Intent(getActivity(), PlayerActivity.class)
                     .setData(Uri.parse(mLocalVideoCursorAdapter.getItemData(position).getPath()))
                     .putExtra(PlayerActivity.CONTENT_ID_EXTRA, String.valueOf(mLocalVideoCursorAdapter.getItemData(position).getId()))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, mLocalVideoCursorAdapter.getItemData(position).getMimeType());
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, mLocalVideoCursorAdapter.getItemData(position).getMimeType())
+                    .putExtra(PlayerActivity.PROVIDER_EXTRA,"0");
             getActivity().startActivity(intent);
     }
 
@@ -97,7 +132,7 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
             case LOCAL_VIDEO_LOADER:
                 return new CursorLoader(
                         getActivity(),
-                        VideoLocalCursorAdapter.LOCAL_VIDEO_URI,
+                        VideoProvider.VIDEO_PLAY_HISTORY_URI,
                         null,
                         null,
                         null,
@@ -129,5 +164,35 @@ public class VideoLocalListFragment extends Fragment implements LoaderManager.Lo
                 throw new UnsupportedOperationException("Unknown loader id: " + loader.getId());
         }
 
+    }
+
+    private class VideoObserver extends ContentObserver {
+
+        public VideoObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            Log.d(TAG, "===============onChange: 数据变更");
+            //此处可以进行相应的业务处理
+            mLoaderManager.restartLoader(LOCAL_VIDEO_LOADER,null,VideoLocalListFragment.this);
+        }
+    }
+
+    private static class MyHandler extends Handler {
+        private WeakReference<Activity> activityWeakReference;
+
+        public MyHandler(Activity activity) {
+            activityWeakReference = new WeakReference<Activity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            Activity activity = activityWeakReference.get();
+            if (activity != null) {
+                Log.d(TAG, "handleMessage: " + msg.what);
+            }
+        }
     }
 }

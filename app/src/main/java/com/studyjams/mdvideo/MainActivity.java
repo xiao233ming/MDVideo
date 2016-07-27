@@ -1,9 +1,15 @@
 package com.studyjams.mdvideo;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,8 +18,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +27,9 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
 import com.studyjams.mdvideo.Adapter.MainPagerAdapter;
+import com.studyjams.mdvideo.DatabaseHelper.SyncSqlHandler;
+import com.studyjams.mdvideo.DatabaseHelper.Tables;
+import com.studyjams.mdvideo.DatabaseHelper.VideoProvider;
 import com.studyjams.mdvideo.PlayerModule.PlayerActivity;
 
 import java.util.ArrayList;
@@ -31,8 +40,16 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 1;
-    private ViewPager mViewpager;
     private List<String> mData;
+    private MainPagerAdapter mainPagerAdapter;
+
+    //查询本地媒体库
+    public static final Uri MEDIA_VIDEO_URI = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+    private SyncSqlHandler mSyncSqlHandler;
+
+    public static final String PLAY_HISTORY_ACTION = "com.studyjams.mdvideo.HISTORY";
+    private MyReceiver mMyReceiver;
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +63,29 @@ public class MainActivity extends AppCompatActivity
         mData = new ArrayList<>();
         mData.add(getResources().getString(R.string.menu_video_local));
         mData.add(getResources().getString(R.string.menu_video_history));
-        mData.add(getResources().getString(R.string.menu_video_info));
+//        mData.add(getResources().getString(R.string.menu_video_info));
+
+        mMyReceiver = new MyReceiver();
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(PLAY_HISTORY_ACTION);
+        registerReceiver(mMyReceiver,mIntentFilter);
+
+        /**
+         * token:一个令牌，主要用来标识查询,保证唯一即可.需要跟onXXXComplete方法传入的一致。
+         * （当然你也可以不一致，同样在数据库的操作结束后会调用对应的onXXXComplete方法 ）
+         * cookie:你想传给onXXXComplete方法使用的一个对象。(没有的话传递null即可)
+         * Uri :uri（进行查询的通用资源标志符）:
+         * projection: 查询的列
+         * selection:  限制条件
+         * selectionArgs: 查询参数
+         * orderBy: 排序条件
+         */
+        mSyncSqlHandler = new SyncSqlHandler(getContentResolver());
+        mSyncSqlHandler.startQuery(SyncSqlHandler.MEDIA_QUERY_INSERT, null, MEDIA_VIDEO_URI, null, null, null,null);
+        mSyncSqlHandler.startQuery(SyncSqlHandler.LOCAL_QUERY_DELETE,null,
+                VideoProvider.VIDEO_PLAY_HISTORY_URI,
+                new String[]{Tables.Video_path},
+                null,null,null);
     }
 
     private void initView(){
@@ -71,8 +110,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.main_view_table);
-        mViewpager = (ViewPager)findViewById(R.id.main_view_pager);
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),mData);
+        ViewPager mViewpager = (ViewPager)findViewById(R.id.main_view_pager);
+        mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),mData);
         mViewpager.setAdapter(mainPagerAdapter);
         tabLayout.setupWithViewPager(mViewpager);
         mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -104,12 +143,51 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private class MyReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.getAction().equals(PLAY_HISTORY_ACTION)) {
+
+                ContentValues values = new ContentValues();
+                values.put(Tables.Video_playDuration, intent.getStringExtra(Tables.Video_playDuration));
+                values.put(Tables.Video_createdDate, intent.getStringExtra(Tables.Video_createdDate));
+                Log.d(TAG, "============onReceive: " + intent.getStringExtra(Tables.Video_playDuration));
+                /**更新播放时长**/
+                Uri updateUri = ContentUris.withAppendedId(VideoProvider.VIDEO_PLAY_HISTORY_URI,
+                        Long.valueOf(intent.getStringExtra(Tables.Video_id)));
+                mSyncSqlHandler.startUpdate(SyncSqlHandler.LOCAL_UPDATE, null,
+                        updateUri, values, null,
+                        new String[]{Tables.Video_playDuration, Tables.Video_createdDate});
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mMyReceiver);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem searchViewMenuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchViewMenuItem.getActionView();
+
+//        MenuItem searchViewMenuItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) searchViewMenuItem.getActionView();
 
         return true;
     }
@@ -122,9 +200,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

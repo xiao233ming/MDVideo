@@ -42,6 +42,8 @@ public class VideoProvider extends ContentProvider {
      * 操作使用的uri
      */
     public static final Uri VIDEO_PLAY_HISTORY_URI = Uri.parse("content://" + AUTHORITY + "/" + Tables.TABLE_VIDEO_NAME);
+    /**注册监听使用的uri**/
+    public static final Uri VIDEO_CHANGE_URI = Uri.parse("content://" + AUTHORITY);
 
     @Override
     public boolean onCreate() {
