@@ -23,9 +23,8 @@
             android:id="@+id/main_view_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryLight"
-            app:tabIndicatorColor="@color/accent"
-            app:tabSelectedTextColor="@color/primary">
+            android:background="@color/primary"
+            app:tabIndicatorColor="@color/accent">
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -43,9 +42,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_behavior="com.studyjams.mdvideo.View.FloatingActionButtonScrollBehavior"
         android:src="@drawable/ic_create_new_folder_"
-        app:backgroundTint="@color/primaryLight"
         app:elevation="6dp"
-        app:rippleColor="@color/primary"
         app:pressedTranslationZ="25dp"
         android:clickable="true"
         app:fabSize="normal"/>

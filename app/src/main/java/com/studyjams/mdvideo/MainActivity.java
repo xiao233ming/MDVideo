@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity
     private void shareWithFriends() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.send_share_title));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.send_share_url));
         intent.setType("text/plain");
         startActivity(Intent.createChooser(intent, getString(R.string.send_share_title)));
     }
