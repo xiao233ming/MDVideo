@@ -25,7 +25,7 @@ MDVideo是在Google Study Jams 2016活动第二阶段发起的一个团队协作
 - 支持mp4、mp3、Webm、aac、mkv格式
 
 ## Download
-[v1.0](https://github.com/AndroidTips/MDVideo/releases)
+<a href='https://play.google.com/store/apps/details?id=com.studyjams.mdvideo&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
 ## Remark
 Please feel free to [report bugs](https://github.com/AndroidTips/MDVideo/issues) or ask for help via email.
