@@ -22,7 +22,7 @@ MDVideo是在Google Study Jams 2016活动第二阶段发起的一个团队协作
 
 - 支持Android 4.4及以上
 - 本地视频播放支持
-- 支持mp4、mp3、Webm、aac、mkv格式
+- 支持FMP4, MP4, M4A, MKV, WebM, MP3, AAC, MPEG-TS, MPEG-PS, OGG, FLV, WAV格式
 
 ## Download
 <a href='https://play.google.com/store/apps/details?id=com.studyjams.mdvideo&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
@@ -36,6 +36,7 @@ Email: artharyoungcn@gmail.com
 
 ## Thanks
 - [Google ExoPlayer](https://github.com/google/ExoPlayer)
+- [Developer guide](http://google.github.io/ExoPlayer/guide.html)
 - [Icon](http://iconmonstr.com/video-14/?png)
 - [Adapter](https://github.com/hongyangAndroid/baseAdapter)
 - [RecyclerViewCursorAdapter](https://github.com/androidessence/RecyclerViewCursorAdapter)

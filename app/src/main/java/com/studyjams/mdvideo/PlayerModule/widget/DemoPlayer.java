@@ -67,6 +67,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
 
   /**
    * Builds renderers for the player.
+   * 构造渲染器
    */
   public interface RendererBuilder {
     /**
@@ -88,6 +89,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
 
   /**
    * A listener for core events.
+   * 核心事件监听
    */
   public interface Listener {
     void onStateChanged(boolean playWhenReady, int playbackState);
@@ -98,6 +100,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
 
   /**
    * A listener for internal errors.
+   * 内部错误监听
    * <p>
    * These errors are not visible to the user, and hence this listener is provided for
    * informational purposes only. Note however that an internal error may cause a fatal
@@ -117,6 +120,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
 
   /**
    * A listener for debugging information.
+   * 调试信息监听
    */
   public interface InfoListener {
     void onVideoFormatEnabled(Format format, int trigger, long mediaTimeMs);
@@ -134,6 +138,7 @@ public class DemoPlayer implements ExoPlayer.Listener, ChunkSampleSource.EventLi
 
   /**
    * A listener for receiving notifications of timed text.
+   * 接收通知的监听，字幕相关？
    */
   public interface CaptionListener {
     void onCues(List<Cue> cues);
